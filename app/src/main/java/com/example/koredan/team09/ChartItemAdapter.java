@@ -61,8 +61,10 @@ public class ChartItemAdapter extends BaseAdapter implements ListAdapter {
             @Override
             public void onClick(View v) {
                 //make sure to delete seating chart data and not just item in the listview
+                // TO-DO confirm delete, currently just deletes without asking user.
                 app.deleteChart(position);
                 notifyDataSetChanged();
+
             }
         });
         viewBtn.setOnClickListener(new View.OnClickListener(){
