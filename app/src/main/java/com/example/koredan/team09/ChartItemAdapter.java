@@ -12,10 +12,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-/**
- * Created by Ben on 11/11/2017.
- */
-
 public class ChartItemAdapter extends BaseAdapter implements ListAdapter {
     private ArrayList<String> list = new ArrayList<String>();
     private SeatingListsActivity app;
@@ -71,6 +67,7 @@ public class ChartItemAdapter extends BaseAdapter implements ListAdapter {
             @Override
             public void onClick(View v) {
                 //TO-DO write code to go into seating chart view
+                app.viewChart(position);
                 notifyDataSetChanged();
             }
         });
