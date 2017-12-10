@@ -40,7 +40,7 @@ public class SeatingChartActivity extends AppCompatActivity {
         }
     }
 
-    public void click(int id) {
+    public void click(final int id) {
 
         Log.d("Button ID: ", "" + id);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -51,6 +51,8 @@ public class SeatingChartActivity extends AppCompatActivity {
         builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                Button btn = (Button) findViewById(id);
+                btn.setText(input.getText().toString());
 
             }
         });
