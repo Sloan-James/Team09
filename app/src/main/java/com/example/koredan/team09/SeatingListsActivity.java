@@ -46,7 +46,7 @@ public class SeatingListsActivity extends AppCompatActivity {
     public void deleteChart(int position) {
         listNames.remove(position);
         Global.charts.remove(position);
-        saveCharts();
+        Global.saveCharts(this);
     }
 
     public void viewChart(int position) {
@@ -81,6 +81,7 @@ public class SeatingListsActivity extends AppCompatActivity {
         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_CLASS_TEXT);
         builder.setView(layout);
+        final AppCompatActivity app = this;
         builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -97,7 +98,7 @@ public class SeatingListsActivity extends AppCompatActivity {
                     lView.invalidateViews();
                     Toast.makeText(SeatingListsActivity.this, "Added new seating chart", Toast.LENGTH_LONG).show();
                     //Snackbar.make(view, "Added new seating chart", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                    saveCharts();
+                    Global.saveCharts(app);
                 } else if (listNames.contains(name)) {
                     Toast.makeText(SeatingListsActivity.this, "You already have a seating chart for " + name, Toast.LENGTH_LONG).show();
                 }
@@ -133,32 +134,4 @@ public class SeatingListsActivity extends AppCompatActivity {
             //listNames = new ArrayList<String>(Arrays.asList(chartNames.split(":")));
         }
     }
-
-    public void saveCharts() {
-        Gson gson = new Gson();
-        String chartNames = "";
-        for (int i = 0; i < Global.charts.size(); i++) {
-            if (i == Global.charts.size() - 1)
-                chartNames += gson.toJson(Global.charts.get(i));
-            else
-                chartNames += gson.toJson(Global.charts.get(i)) + "/";
-        }
-        SharedPreferences.Editor editor = getSharedPreferences("Charts", MODE_PRIVATE).edit();
-        /*String chartNames = "";
-        if (listNames.size() == 0)
-            chartNames = "n/a";
-        else {
-            for (int i = 0; i < listNames.size(); i++) {
-                if (i == listNames.size() - 1)
-                    chartNames += listNames.get(i);
-                else
-                    chartNames += listNames.get(i) + ":";
-            }
-        }
-        editor.putString("charts", chartNames);*/
-        editor.putString("charts", chartNames);
-        editor.apply();
-    }
-
-
 }

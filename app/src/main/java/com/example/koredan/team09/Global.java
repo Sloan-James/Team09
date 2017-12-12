@@ -1,5 +1,10 @@
 package com.example.koredan.team09;
 
+import android.content.SharedPreferences;
+import android.support.v7.app.AppCompatActivity;
+
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 
 /**
@@ -31,5 +36,37 @@ public class Global {
                 return true;
         }
         return false;
+    }
+
+    public static void setSeatNameByChart(int chartId, int seatId, String name) {
+        SeatingChart chart = charts.get(chartId);
+        chart.setNameToSeat(seatId, name);
+        charts.set(chartId, chart);
+    }
+
+    public static void saveCharts(AppCompatActivity app) {
+        Gson gson = new Gson();
+        String chartNames = "";
+        for (int i = 0; i < charts.size(); i++) {
+            if (i == charts.size() - 1)
+                chartNames += gson.toJson(charts.get(i));
+            else
+                chartNames += gson.toJson(charts.get(i)) + "/";
+        }
+        SharedPreferences.Editor editor = app.getSharedPreferences("Charts", app.MODE_PRIVATE).edit();
+        /*String chartNames = "";
+        if (listNames.size() == 0)
+            chartNames = "n/a";
+        else {
+            for (int i = 0; i < listNames.size(); i++) {
+                if (i == listNames.size() - 1)
+                    chartNames += listNames.get(i);
+                else
+                    chartNames += listNames.get(i) + ":";
+            }
+        }
+        editor.putString("charts", chartNames);*/
+        editor.putString("charts", chartNames);
+        editor.apply();
     }
 }
